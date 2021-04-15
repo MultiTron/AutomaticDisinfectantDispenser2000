@@ -1,9 +1,9 @@
 # Automatic Disinfectant Dispenser 2000©
+![alt text](demo.gif "Arduino")
 ## Съдържание
-    1. **Цел**
-    2. **Материали**
-    3. **Кодът**
-    5. **Демо**
+    1. Цел
+    2. Материали
+    3. Кодът
 ## Цел
 В свят покосен от пандемия е необходимо да спазваме всички мерки против развитието на вируса. Контактът с всякакви повърхности следва да бъде ограничен. Моят проект цели точно това - безконтактно ползване на дезинфектант.
 ## Материали
@@ -20,3 +20,42 @@
 ![alt text](https://phi-education.com/store/image/cache/data/electronics/sensors/pir_motion_sensor/main-750x500.png "Arduino")
 
 ## Кодът
+    1. Arduino IDE
+    2. Servo.h
+
+### 1. За реализиране на програмата на проекта използвах Arduino IDE. Mеждуплатформено приложение, което е написано с функции от C и C++. Използва се за писане и качване на програми на платки, съвместими с Arduino, но също така и други платки с вградена система. 
+
+### 2. Servo.h е библиотека позволяваща на Arduino да контролира множество от серво мотори.
+
+```
+#include <Servo.h>
+
+#define sensorPin 12
+Servo servo;
+int pirState = LOW;
+int val = 0;
+
+void setup() {
+  pinMode(sensorPin, INPUT); 
+  servo.attach(13);
+}
+
+void loop() {
+   PIRSensor();
+}
+
+void PIRSensor() {
+   val = digitalRead(sensorPin);
+  if (val == HIGH) {
+    servo.write(0);
+    if (pirState == LOW) {
+      pirState = HIGH;
+    }
+  } else {
+    servo.write(90); 
+    if (pirState == HIGH){
+      pirState = LOW;
+    }
+  }
+}
+```
