@@ -30,32 +30,28 @@
 ```
 #include <Servo.h>
 
-#define sensorPin 12
-Servo servo;
-int pirState = LOW;
-int val = 0;
+#define servoPin 13
+#define sensorPin 12 //дефинираме пин за ПИР сезор
+Servo servo; //променлива серво
 
 void setup() {
-  pinMode(sensorPin, INPUT); 
-  servo.attach(13);
+  pinMode(sensorPin, INPUT); //задаваме работен режим на пин 12 отговарящ за ПИР сензора
+  servo.attach(servoPin); //Свързваме серво мотора с дигитален пин 12 на ардуиното
 }
 
 void loop() {
-   PIRSensor();
+   PIRSensor(); // извикваме метода
 }
 
+//метод
 void PIRSensor() {
-   val = digitalRead(sensorPin);
-  if (val == HIGH) {
+  //проверка дали в обсега на сензора е засечено движение
+  if (digitalRead(sensorPin) == HIGH) { 
+    servo.write(90); //задаваме градусна стойност за движение на серво мотора
+  } 
+  else {
     servo.write(0);
-    if (pirState == LOW) {
-      pirState = HIGH;
-    }
-  } else {
-    servo.write(90); 
-    if (pirState == HIGH){
-      pirState = LOW;
-    }
   }
 }
 ```
+<https://www.tinkercad.com/things/dTmaaF5xII7-shiny-sango-tumelo/editel>

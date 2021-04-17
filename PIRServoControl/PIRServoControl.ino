@@ -1,30 +1,30 @@
 #include <Servo.h>
 
-#define sensorPin 12
-Servo servo;
-int pirState = LOW;// we start, assuming no motion detected
-int val = 0;       // variable for reading the pin status
+#define servoPin 13
+#define sensorPin 12 //дефинираме пин за ПИР сезор
+Servo servo;         //променлива серво
 
-void setup() {
-  pinMode(sensorPin, INPUT); // declare sensor as input
-  servo.attach(13);
+void setup()
+{
+  pinMode(sensorPin, INPUT); //задаваме работен режим на пин 12 отговарящ за ПИР сензора
+  servo.attach(servoPin);    //Свързваме серво мотора с дигитален пин 12 на ардуиното
 }
 
-void loop() {
-   PIRSensor();
+void loop()
+{
+  PIRSensor(); // извикваме метода
 }
 
-void PIRSensor() {
-   val = digitalRead(sensorPin);// read input value
-  if (val == HIGH) {          // check if the input is HIGH
-    servo.write(0);// turn LED ON
-    if (pirState == LOW) {
-      pirState = HIGH;
-    }
-  } else {
-    servo.write(90); // turn LED OFF
-    if (pirState == HIGH){
-      pirState = LOW;
-    }
+//метод
+void PIRSensor()
+{
+  //проверка дали в обсега на сензора е засечено движение
+  if (digitalRead(sensorPin) == HIGH)
+  {
+    servo.write(90); //задаваме градусна стойност за движение на серво мотора
+  }
+  else
+  {
+    servo.write(0);
   }
 }
